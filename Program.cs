@@ -6,21 +6,23 @@ namespace SimpleGC
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("***** GC Basics *****");
+            Console.WriteLine("***** Fun with System.GC *****");
+
+            // Print out estimated number of bytes on heap.
+            Console.WriteLine("Estimated bytes on heap: {0}", GC.GetTotalMemory(false));
+
+            // MaxGeneration is zero based, so add 1 for display purposes.
+            Console.WriteLine("This OS has {0} object generations.\n", (GC.MaxGeneration + 1));
 
             // Create a new Car object on the managed heap. We are returned a reference to this object ("refToMyCar").
             Car refToMyCar = new Car("Zippy", 50);
-
             // The C# dot operator (.) is used to invoke members on the object using our reference variable.
             Console.WriteLine(refToMyCar.ToString());
 
-            Console.ReadLine();
-        }
+            // Print out generation of refToMyCar object.
+            Console.WriteLine("Generation of refToMyCar is: {0}", GC.GetGeneration(refToMyCar));
 
-        static void MakeACar()
-        {
-            // If myCar is the only reference to the Car object, it *may* be destroyed when this method returns.
-            Car myCar = new Car();
+            Console.ReadLine();
         }
     }
 }
